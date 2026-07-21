@@ -1,0 +1,42 @@
+create extension if not exists "uuid-ossp";
+create type public.user_role as enum ('admin', 'editor', 'sales', 'customer');
+create type public.quote_status as enum ('draft', 'submitted', 'reviewing', 'approved', 'rejected', 'expired');
+
+create table public.profiles (id uuid primary key references auth.users on delete cascade, full_name text, role user_role not null default 'customer', company_id uuid, created_at timestamptz not null default now());
+create table public.companies (id uuid primary key default uuid_generate_v4(), legal_name text not null, trade_name text, cnpj text unique not null, segment text, city text, state char(2), approved_at timestamptz, created_at timestamptz not null default now());
+alter table public.profiles add constraint profiles_company_id_fkey foreign key (company_id) references public.companies(id);
+create table public.categories (id uuid primary key default uuid_generate_v4(), name text not null, slug text unique not null, sort_order int default 0, active boolean default true);
+create table public.products (id uuid primary key default uuid_generate_v4(), category_id uuid references public.categories, name text not null, slug text unique not null, sku text unique not null, description text, specifications jsonb default '[]', min_order int not null default 1, unit text not null default 'un.', stock int not null default 0, active boolean default true, featured boolean default false, created_at timestamptz not null default now(), updated_at timestamptz not null default now());
+create table public.product_images (id uuid primary key default uuid_generate_v4(), product_id uuid references public.products on delete cascade, storage_path text not null, alt_text text, sort_order int default 0);
+create table public.tags (id uuid primary key default uuid_generate_v4(), name text not null, slug text unique not null);
+create table public.product_tags (product_id uuid references public.products on delete cascade, tag_id uuid references public.tags on delete cascade, primary key(product_id, tag_id));
+create table public.price_tiers (id uuid primary key default uuid_generate_v4(), product_id uuid references public.products on delete cascade, minimum_quantity int not null, unit_price numeric(12,2) not null, unique(product_id, minimum_quantity));
+create table public.quotes (id uuid primary key default uuid_generate_v4(), number bigint generated always as identity, company_id uuid references public.companies, created_by uuid references public.profiles, status quote_status default 'draft', subtotal numeric(12,2) default 0, notes text, expires_at timestamptz, created_at timestamptz default now());
+create table public.quote_items (id uuid primary key default uuid_generate_v4(), quote_id uuid references public.quotes on delete cascade, product_id uuid references public.products, quantity int not null, unit_price numeric(12,2) not null, total numeric(12,2) generated always as (quantity * unit_price) stored);
+
+alter table public.profiles enable row level security; alter table public.companies enable row level security; alter table public.categories enable row level security; alter table public.products enable row level security; alter table public.product_images enable row level security; alter table public.tags enable row level security; alter table public.product_tags enable row level security; alter table public.price_tiers enable row level security; alter table public.quotes enable row level security; alter table public.quote_items enable row level security;
+create or replace function public.is_staff() returns boolean language sql stable security definer set search_path = public as $$ select exists (select 1 from public.profiles where id = auth.uid() and role in ('admin', 'editor', 'sales')); $$;
+create policy "public categories" on public.categories for select using (active = true);
+create policy "public active products" on public.products for select using (active = true);
+create policy "public product images metadata" on public.product_images for select using (product_id in (select id from public.products where active = true));
+create policy "public tags" on public.tags for select using (true);
+create policy "public product tags" on public.product_tags for select using (true);
+create policy "authenticated price tiers" on public.price_tiers for select to authenticated using (exists (select 1 from public.profiles where id = auth.uid() and company_id is not null));
+create policy "own profile" on public.profiles for select to authenticated using (id = auth.uid());
+create policy "own company" on public.companies for select to authenticated using (id in (select company_id from public.profiles where id = auth.uid()));
+create policy "own quotes" on public.quotes for all to authenticated using (created_by = auth.uid()) with check (created_by = auth.uid());
+create policy "own quote items" on public.quote_items for all to authenticated using (quote_id in (select id from public.quotes where created_by = auth.uid())) with check (quote_id in (select id from public.quotes where created_by = auth.uid()));
+create policy "staff profiles" on public.profiles for all to authenticated using (public.is_staff()) with check (public.is_staff());
+create policy "staff companies" on public.companies for all to authenticated using (public.is_staff()) with check (public.is_staff());
+create policy "staff categories" on public.categories for all to authenticated using (public.is_staff()) with check (public.is_staff());
+create policy "staff products" on public.products for all to authenticated using (public.is_staff()) with check (public.is_staff());
+create policy "staff product images" on public.product_images for all to authenticated using (public.is_staff()) with check (public.is_staff());
+create policy "staff tags" on public.tags for all to authenticated using (public.is_staff()) with check (public.is_staff());
+create policy "staff product tags" on public.product_tags for all to authenticated using (public.is_staff()) with check (public.is_staff());
+create policy "staff price tiers" on public.price_tiers for all to authenticated using (public.is_staff()) with check (public.is_staff());
+create policy "staff quotes" on public.quotes for all to authenticated using (public.is_staff()) with check (public.is_staff());
+create policy "staff quote items" on public.quote_items for all to authenticated using (public.is_staff()) with check (public.is_staff());
+
+insert into storage.buckets (id, name, public) values ('products', 'products', true) on conflict do nothing;
+create policy "public product images" on storage.objects for select using (bucket_id = 'products');
+create policy "staff manage product images" on storage.objects for all to authenticated using (bucket_id = 'products' and public.is_staff()) with check (bucket_id = 'products' and public.is_staff());

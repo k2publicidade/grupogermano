@@ -1,0 +1,402 @@
+{
+  "content": [
+    {
+      "id": "c01",
+      "key": "hero.eyebrow",
+      "group": "Hero",
+      "label": "Chamada superior",
+      "type": "text",
+      "value": "Papelaria que faz a loja sorrir",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c02",
+      "key": "hero.title",
+      "group": "Hero",
+      "label": "Título principal",
+      "type": "textarea",
+      "value": "Presentes que ganham vida.",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c03",
+      "key": "hero.description",
+      "group": "Hero",
+      "label": "Descrição",
+      "type": "textarea",
+      "value": "Estampas autorais, acabamento premium e um mix pronto para encantar seus clientes — da prateleira até o laço final.",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c04",
+      "key": "hero.image",
+      "group": "Hero",
+      "label": "Imagem principal",
+      "type": "image",
+      "value": "/images/produtos-reais/kit-30x44-rosa-perspectiva.png",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c05",
+      "key": "manifesto.eyebrow",
+      "group": "Manifesto",
+      "label": "Chamada superior",
+      "type": "text",
+      "value": "Um presente antes mesmo de abrir",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c06",
+      "key": "manifesto.title",
+      "group": "Manifesto",
+      "label": "Título",
+      "type": "textarea",
+      "value": "Papel bonito. Afeto à vista.",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c07",
+      "key": "manifesto.description",
+      "group": "Manifesto",
+      "label": "Descrição",
+      "type": "textarea",
+      "value": "Transformamos o gesto de presentear em uma pequena celebração. Para o lojista, isso significa produto que chama atenção, cria desejo e deixa a escolha mais fácil.",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c08",
+      "key": "manifesto.image",
+      "group": "Manifesto",
+      "label": "Imagem",
+      "type": "image",
+      "value": "/images/produtos-reais/display-papeis-infantis.png",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c09",
+      "key": "collections.title",
+      "group": "Coleções",
+      "label": "Título",
+      "type": "textarea",
+      "value": "Qual história vai morar na sua loja?",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c10",
+      "key": "collections.description",
+      "group": "Coleções",
+      "label": "Descrição",
+      "type": "textarea",
+      "value": "Um mix versátil para diferentes ocasiões, idades e jeitos de presentear.",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c11",
+      "key": "collections.image",
+      "group": "Coleções",
+      "label": "Imagem principal",
+      "type": "image",
+      "value": "/images/produtos-reais/linha-completa-mundo-encantado.png",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c12",
+      "key": "retail.title",
+      "group": "Lojistas",
+      "label": "Título",
+      "type": "textarea",
+      "value": "Um mix que chega pronto para girar.",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c13",
+      "key": "scale.title",
+      "group": "Estrutura",
+      "label": "Título",
+      "type": "textarea",
+      "value": "Da ideia à prateleira, cuidamos de tudo.",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c14",
+      "key": "scale.description",
+      "group": "Estrutura",
+      "label": "Descrição",
+      "type": "textarea",
+      "value": "Criação autoral, produção gráfica, controle de qualidade e expedição reunidos para atender sua loja de ponta a ponta.",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c15",
+      "key": "scale.image",
+      "group": "Estrutura",
+      "label": "Imagem",
+      "type": "image",
+      "value": "/images/produtos-reais/linha-completa-mundo-encantado.png",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c16",
+      "key": "final.title",
+      "group": "CTA final",
+      "label": "Título",
+      "type": "textarea",
+      "value": "Leve um mundo de boas escolhas para a sua loja.",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "c17",
+      "key": "final.description",
+      "group": "CTA final",
+      "label": "Descrição",
+      "type": "textarea",
+      "value": "Conte sobre o seu negócio e receba uma proposta comercial personalizada.",
+      "status": "published",
+      "updatedAt": "2026-07-19T12:00:00.000Z"
+    }
+  ],
+  "media": [
+    {
+      "id": "m01",
+      "name": "Kit 30x44 rosa — perspectiva",
+      "url": "/images/produtos-reais/kit-30x44-rosa-perspectiva.png",
+      "alt": "Kit Presente Encantado 30 por 44 centímetros",
+      "width": 1122,
+      "height": 1402,
+      "createdAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "m02",
+      "name": "Kit 30x44 rosa — frente",
+      "url": "/images/produtos-reais/kit-30x44-rosa-frente.png",
+      "alt": "Kit Presente Encantado rosa visto de frente",
+      "width": 1122,
+      "height": 1402,
+      "createdAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "m03",
+      "name": "Kit 25x35 Turma",
+      "url": "/images/produtos-reais/kit-25x35-turma.png",
+      "alt": "Kit Presente Encantado com estampa Turma da Mônica",
+      "width": 1122,
+      "height": 1402,
+      "createdAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "m04",
+      "name": "Kit 20x29 Espaço",
+      "url": "/images/produtos-reais/kit-20x29-espaco.png",
+      "alt": "Kit Presente Encantado com estampa espacial",
+      "width": 1122,
+      "height": 1402,
+      "createdAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "m05",
+      "name": "Linha completa",
+      "url": "/images/produtos-reais/linha-completa-mundo-encantado.png",
+      "alt": "Linha completa Mundo Encantado",
+      "width": 1054,
+      "height": 1492,
+      "createdAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "m06",
+      "name": "Display infantil",
+      "url": "/images/produtos-reais/display-papeis-infantis.png",
+      "alt": "Display de papéis infantis",
+      "width": 439,
+      "height": 687,
+      "createdAt": "2026-07-19T12:00:00.000Z"
+    },
+    {
+      "id": "m07",
+      "name": "Display premium",
+      "url": "/images/produtos-reais/display-papeis-premium.png",
+      "alt": "Display de papéis premium",
+      "width": 427,
+      "height": 689,
+      "createdAt": "2026-07-19T12:00:00.000Z"
+    }
+  ],
+  "products": [
+    {"id":"ME26202901","slug":"kit-presente-encantado-20x29-infantil","name":"Kit Presente Encantado 20 × 29 cm — Infantil","shortName":"Kit 20 × 29 — Infantil","category":"Kits para presente","description":"Kit Presente Encantado no formato 20 × 29 cm, com estampas lúdicas e coloridas para presentes infantis.","image":"/images/produtos-reais/kit-25x35-turma.png","sku":"ME26202901","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Infantil","Atacado"],"specifications":[{"label":"Formato","value":"20 × 29 cm"},{"label":"Linha","value":"Infantil"},{"label":"EAN-13","value":"7898973004087"},{"label":"Caixa master","value":"250 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26202902","slug":"kit-presente-encantado-20x29-casual-masculino","name":"Kit Presente Encantado 20 × 29 cm — Casual / Masculino","shortName":"Kit 20 × 29 — Casual / Masculino","category":"Kits para presente","description":"Kit Presente Encantado no formato 20 × 29 cm, com estampas versáteis para presentes casuais e masculinos.","image":"/images/produtos-reais/kit-20x29-espaco.png","sku":"ME26202902","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Casual","Masculino","Atacado"],"specifications":[{"label":"Formato","value":"20 × 29 cm"},{"label":"Linha","value":"Casual / Masculino"},{"label":"EAN-13","value":"7898973004094"},{"label":"Caixa master","value":"250 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26202903","slug":"kit-presente-encantado-20x29-romantico-feminino","name":"Kit Presente Encantado 20 × 29 cm — Romântico / Feminino","shortName":"Kit 20 × 29 — Romântico / Feminino","category":"Kits para presente","description":"Kit Presente Encantado no formato 20 × 29 cm, com estampas delicadas para presentes românticos e femininos.","image":"/images/produtos-reais/kit-30x44-rosa-frente.png","sku":"ME26202903","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Romântico","Feminino","Atacado"],"specifications":[{"label":"Formato","value":"20 × 29 cm"},{"label":"Linha","value":"Romântico / Feminino"},{"label":"EAN-13","value":"7898973004100"},{"label":"Caixa master","value":"250 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26253501","slug":"kit-presente-encantado-25x35-infantil","name":"Kit Presente Encantado 25 × 35 cm — Infantil","shortName":"Kit 25 × 35 — Infantil","category":"Kits para presente","description":"Kit Presente Encantado no formato 25 × 35 cm, com estampas lúdicas e coloridas para presentes infantis.","image":"/images/produtos-reais/kit-25x35-turma.png","sku":"ME26253501","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Infantil","Atacado"],"specifications":[{"label":"Formato","value":"25 × 35 cm"},{"label":"Linha","value":"Infantil"},{"label":"EAN-13","value":"7898973004117"},{"label":"Caixa master","value":"250 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26253502","slug":"kit-presente-encantado-25x35-casual-masculino","name":"Kit Presente Encantado 25 × 35 cm — Casual / Masculino","shortName":"Kit 25 × 35 — Casual / Masculino","category":"Kits para presente","description":"Kit Presente Encantado no formato 25 × 35 cm, com estampas versáteis para presentes casuais e masculinos.","image":"/images/produtos-reais/kit-20x29-espaco.png","sku":"ME26253502","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Casual","Masculino","Atacado"],"specifications":[{"label":"Formato","value":"25 × 35 cm"},{"label":"Linha","value":"Casual / Masculino"},{"label":"EAN-13","value":"7898973004124"},{"label":"Caixa master","value":"250 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26253503","slug":"kit-presente-encantado-25x35-romantico-feminino","name":"Kit Presente Encantado 25 × 35 cm — Romântico / Feminino","shortName":"Kit 25 × 35 — Romântico / Feminino","category":"Kits para presente","description":"Kit Presente Encantado no formato 25 × 35 cm, com estampas delicadas para presentes românticos e femininos.","image":"/images/produtos-reais/kit-30x44-rosa-frente.png","sku":"ME26253503","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Romântico","Feminino","Atacado"],"specifications":[{"label":"Formato","value":"25 × 35 cm"},{"label":"Linha","value":"Romântico / Feminino"},{"label":"EAN-13","value":"7898973004131"},{"label":"Caixa master","value":"250 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26304401","slug":"kit-presente-encantado-30x44-infantil","name":"Kit Presente Encantado 30 × 44 cm — Infantil","shortName":"Kit 30 × 44 — Infantil","category":"Kits para presente","description":"Kit Presente Encantado no formato 30 × 44 cm, com estampas lúdicas e coloridas para presentes infantis.","image":"/images/produtos-reais/kit-25x35-turma.png","sku":"ME26304401","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Infantil","Atacado"],"specifications":[{"label":"Formato","value":"30 × 44 cm"},{"label":"Linha","value":"Infantil"},{"label":"EAN-13","value":"7898973004148"},{"label":"Caixa master","value":"250 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26304402","slug":"kit-presente-encantado-30x44-casual-masculino","name":"Kit Presente Encantado 30 × 44 cm — Casual / Masculino","shortName":"Kit 30 × 44 — Casual / Masculino","category":"Kits para presente","description":"Kit Presente Encantado no formato 30 × 44 cm, com estampas versáteis para presentes casuais e masculinos.","image":"/images/produtos-reais/kit-20x29-espaco.png","sku":"ME26304402","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Casual","Masculino","Atacado"],"specifications":[{"label":"Formato","value":"30 × 44 cm"},{"label":"Linha","value":"Casual / Masculino"},{"label":"EAN-13","value":"7898973004155"},{"label":"Caixa master","value":"250 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26304403","slug":"kit-presente-encantado-30x44-romantico-feminino","name":"Kit Presente Encantado 30 × 44 cm — Romântico / Feminino","shortName":"Kit 30 × 44 — Romântico / Feminino","category":"Kits para presente","description":"Kit Presente Encantado no formato 30 × 44 cm, com estampas delicadas para presentes românticos e femininos.","image":"/images/produtos-reais/kit-30x44-rosa-frente.png","sku":"ME26304403","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Romântico","Feminino","Atacado"],"specifications":[{"label":"Formato","value":"30 × 44 cm"},{"label":"Linha","value":"Romântico / Feminino"},{"label":"EAN-13","value":"7898973004162"},{"label":"Caixa master","value":"250 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26435901","slug":"kit-presente-encantado-43x59-infantil","name":"Kit Presente Encantado 43 × 59 cm — Infantil","shortName":"Kit 43 × 59 — Infantil","category":"Kits para presente","description":"Kit Presente Encantado no formato 43 × 59 cm, com estampas lúdicas e coloridas para presentes infantis.","image":"/images/produtos-reais/kit-25x35-turma.png","sku":"ME26435901","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Infantil","Atacado"],"specifications":[{"label":"Formato","value":"43 × 59 cm"},{"label":"Linha","value":"Infantil"},{"label":"EAN-13","value":"7898973004179"},{"label":"Caixa master","value":"200 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26435902","slug":"kit-presente-encantado-43x59-casual-masculino","name":"Kit Presente Encantado 43 × 59 cm — Casual / Masculino","shortName":"Kit 43 × 59 — Casual / Masculino","category":"Kits para presente","description":"Kit Presente Encantado no formato 43 × 59 cm, com estampas versáteis para presentes casuais e masculinos.","image":"/images/produtos-reais/kit-20x29-espaco.png","sku":"ME26435902","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Casual","Masculino","Atacado"],"specifications":[{"label":"Formato","value":"43 × 59 cm"},{"label":"Linha","value":"Casual / Masculino"},{"label":"EAN-13","value":"7898973004186"},{"label":"Caixa master","value":"200 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26435903","slug":"kit-presente-encantado-43x59-romantico-feminino","name":"Kit Presente Encantado 43 × 59 cm — Romântico / Feminino","shortName":"Kit 43 × 59 — Romântico / Feminino","category":"Kits para presente","description":"Kit Presente Encantado no formato 43 × 59 cm, com estampas delicadas para presentes românticos e femininos.","image":"/images/produtos-reais/kit-30x44-rosa-frente.png","sku":"ME26435903","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Romântico","Feminino","Atacado"],"specifications":[{"label":"Formato","value":"43 × 59 cm"},{"label":"Linha","value":"Romântico / Feminino"},{"label":"EAN-13","value":"7898973004193"},{"label":"Caixa master","value":"200 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26588901","slug":"kit-presente-encantado-58x89-infantil","name":"Kit Presente Encantado 58 × 89 cm — Infantil","shortName":"Kit 58 × 89 — Infantil","category":"Kits para presente","description":"Kit Presente Encantado no formato 58 × 89 cm, com estampas lúdicas e coloridas para presentes infantis.","image":"/images/produtos-reais/kit-25x35-turma.png","sku":"ME26588901","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Infantil","Atacado"],"specifications":[{"label":"Formato","value":"58 × 89 cm"},{"label":"Linha","value":"Infantil"},{"label":"EAN-13","value":"7898973004209"},{"label":"Caixa master","value":"150 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26588902","slug":"kit-presente-encantado-58x89-casual-masculino","name":"Kit Presente Encantado 58 × 89 cm — Casual / Masculino","shortName":"Kit 58 × 89 — Casual / Masculino","category":"Kits para presente","description":"Kit Presente Encantado no formato 58 × 89 cm, com estampas versáteis para presentes casuais e masculinos.","image":"/images/produtos-reais/kit-20x29-espaco.png","sku":"ME26588902","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Casual","Masculino","Atacado"],"specifications":[{"label":"Formato","value":"58 × 89 cm"},{"label":"Linha","value":"Casual / Masculino"},{"label":"EAN-13","value":"7898973004216"},{"label":"Caixa master","value":"150 kits"}],"tiers":[{"min":50,"price":0}]},
+    {"id":"ME26588903","slug":"kit-presente-encantado-58x89-romantico-feminino","name":"Kit Presente Encantado 58 × 89 cm — Romântico / Feminino","shortName":"Kit 58 × 89 — Romântico / Feminino","category":"Kits para presente","description":"Kit Presente Encantado no formato 58 × 89 cm, com estampas delicadas para presentes românticos e femininos.","image":"/images/produtos-reais/kit-30x44-rosa-frente.png","sku":"ME26588903","minOrder":50,"unit":"kits","stock":0,"featured":true,"active":true,"tags":["Kit","Romântico","Feminino","Atacado"],"specifications":[{"label":"Formato","value":"58 × 89 cm"},{"label":"Linha","value":"Romântico / Feminino"},{"label":"EAN-13","value":"7898973004223"},{"label":"Caixa master","value":"150 kits"}],"tiers":[{"min":50,"price":0}]},
+    {
+      "id": "1",
+      "slug": "kit-presente-encantado-20x29",
+      "name": "Kit Presente Encantado 20 × 29 cm",
+      "shortName": "Kit 20 × 29",
+      "category": "Kits para presente",
+      "description": "Kit compacto com três sacos de presente, três laços prontos e três cartões de/para, em estampa espacial autoral.",
+      "image": "/images/produtos-reais/kit-20x29-espaco.png",
+      "sku": "ME-KP-02029",
+      "minOrder": 48,
+      "unit": "kits",
+      "stock": 2400,
+      "featured": true,
+      "active": false,
+      "tags": [
+        "Kit",
+        "Espacial",
+        "Pronto para venda"
+      ],
+      "specifications": [
+        {
+          "label": "Formato",
+          "value": "20 × 29 cm"
+        },
+        {
+          "label": "Conteúdo",
+          "value": "3 sacos + 3 laços + 3 cartões"
+        },
+        {
+          "label": "Uso",
+          "value": "Cabe um livro"
+        }
+      ],
+      "tiers": [
+        {
+          "min": 48,
+          "price": 3.9
+        },
+        {
+          "min": 240,
+          "price": 3.4
+        },
+        {
+          "min": 480,
+          "price": 2.95
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "slug": "rolo-papel-de-presente",
+      "name": "Rolo de papel de presente",
+      "shortName": "Presentear",
+      "category": "Papéis de presente",
+      "description": "Papel de presente com impressão nítida, boa gramatura e estampas autorais da linha Mundo Encantado.",
+      "image": "/images/produtos-reais/display-papeis-infantis.png",
+      "sku": "ME-PP-015",
+      "minOrder": 60,
+      "unit": "rolos",
+      "stock": 1850,
+      "featured": true,
+      "active": false,
+      "tags": [
+        "Presente",
+        "Estampado",
+        "Atacado"
+      ],
+      "specifications": [
+        {
+          "label": "Dimensão",
+          "value": "100 × 70 cm"
+        },
+        {
+          "label": "Apresentação",
+          "value": "Display para ponto de venda"
+        },
+        {
+          "label": "Estampas",
+          "value": "Sortimento autoral"
+        }
+      ],
+      "tiers": [
+        {
+          "min": 60,
+          "price": 6.8
+        },
+        {
+          "min": 300,
+          "price": 5.95
+        },
+        {
+          "min": 600,
+          "price": 5.4
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "slug": "kit-presente-encantado-30x44",
+      "name": "Kit Presente Encantado 30 × 44 cm",
+      "shortName": "Kit 30 × 44",
+      "category": "Kits para presente",
+      "description": "Solução pronta para o ponto de venda com saco de presente, laço dourado e cartão de/para em embalagem organizada.",
+      "image": "/images/produtos-reais/kit-30x44-rosa-frente.png",
+      "sku": "ME-KP-3044",
+      "minOrder": 48,
+      "unit": "kits",
+      "stock": 920,
+      "featured": true,
+      "active": false,
+      "tags": [
+        "Kit",
+        "Presente",
+        "Pronto para venda"
+      ],
+      "specifications": [
+        {
+          "label": "Formato",
+          "value": "30 × 44 cm"
+        },
+        {
+          "label": "Conteúdo",
+          "value": "1 saco + 1 laço + 1 cartão"
+        },
+        {
+          "label": "Uso",
+          "value": "Cabe uma camisa"
+        }
+      ],
+      "tiers": [
+        {
+          "min": 48,
+          "price": 9.9
+        },
+        {
+          "min": 240,
+          "price": 8.75
+        },
+        {
+          "min": 480,
+          "price": 7.95
+        }
+      ]
+    }
+  ],
+  "submissions": [],
+  "audit": []
+}
