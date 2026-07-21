@@ -1,11 +1,13 @@
 import type { MetadataRoute } from 'next';
-import { readCms } from '@/lib/cms/store';
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+export default function sitemap(): MetadataRoute.Sitemap {
   const base = 'https://grupogermano.app.br';
-  const { products } = await readCms();
   return [
     { url: `${base}/catalogo`, lastModified: new Date(), priority: 1 },
-    ...products.map((product) => ({ url: `${base}/catalogo/mundo-encantado/${product.slug}`, lastModified: new Date(), priority: .8 })),
+    { url: `${base}/cadastro`, lastModified: new Date(), priority: .8 },
+    { url: `${base}/orcamento`, lastModified: new Date(), priority: .8 },
+    { url: `${base}/mundo-encantado/revendedor`, lastModified: new Date(), priority: .7 },
+    { url: `${base}/mundo-encantado/contato`, lastModified: new Date(), priority: .6 },
+    { url: `${base}/mundo-encantado/download`, lastModified: new Date(), priority: .6 },
   ];
 }
