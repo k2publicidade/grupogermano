@@ -42,6 +42,38 @@ export const products: Product[] = [
     specifications: [{ label: 'Formato', value: '30 × 44 cm' }, { label: 'Conteúdo', value: '1 saco + 1 laço + 1 cartão' }, { label: 'Uso', value: 'Cabe uma camisa' }],
     tiers: [{ min: 48, price: 9.9 }, { min: 240, price: 8.75 }, { min: 480, price: 7.95 }],
   },
+  {
+    id: 'ME25001', slug: 'display-papel-de-presente-infantil', name: 'Display de Papel de Presente — Infantil', shortName: 'Display Infantil', category: 'Papéis de presente',
+    description: 'Display expositor para ponto de venda com 156 rolos de papel de presente, contendo estampas lúdicas e coloridas da linha Infantil.',
+    image: '/images/produtos-reais/display-papeis-infantis.png', sku: 'ME25001', minOrder: 1, unit: 'display', stock: 0, featured: true, active: true,
+    tags: ['Display', 'Papel de presente', 'Infantil', 'Atacado'],
+    specifications: [
+      { label: 'Formato do papel', value: '100 × 70 cm' },
+      { label: 'Gramatura', value: '80 g/m²' },
+      { label: 'Apresentação', value: 'Display com 156 rolos' },
+      { label: 'Dimensões do display', value: '39 × 39 × 50 cm' },
+      { label: 'Linha', value: 'Infantil' },
+      { label: 'EAN-13', value: '7898973004056' },
+      { label: 'Caixa master', value: '1 display' }
+    ],
+    tiers: [{ min: 1, price: 0 }],
+  },
+  {
+    id: 'ME25002', slug: 'display-papel-de-presente-casual', name: 'Display de Papel de Presente — Casual', shortName: 'Display Casual', category: 'Papéis de presente',
+    description: 'Display expositor para ponto de venda com 156 rolos de papel de presente, contendo estampas modernas e versáteis da linha Adulto / Casual.',
+    image: '/images/produtos-reais/display-papeis-premium.png', sku: 'ME25002', minOrder: 1, unit: 'display', stock: 0, featured: true, active: true,
+    tags: ['Display', 'Papel de presente', 'Casual', 'Atacado'],
+    specifications: [
+      { label: 'Formato do papel', value: '100 × 70 cm' },
+      { label: 'Gramatura', value: '80 g/m²' },
+      { label: 'Apresentação', value: 'Display com 156 rolos' },
+      { label: 'Dimensões do display', value: '39 × 39 × 50 cm' },
+      { label: 'Linha', value: 'Adulto / Casual' },
+      { label: 'EAN-13', value: '7898973004063' },
+      { label: 'Caixa master', value: '1 display' }
+    ],
+    tiers: [{ min: 1, price: 0 }],
+  },
 ];
 
 export const formatMoney = (value: number) => new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
