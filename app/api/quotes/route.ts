@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { audit, readCms, writeCms } from '@/lib/cms/store';
 
 type Customer = { name?: unknown; company?: unknown; email?: unknown; phone?: unknown; consent?: unknown };
-type QuoteItem = { product?: { name?: string; shortName?: string }; quantity?: number };
+type QuoteItem = { product?: { id?: string }; quantity?: number };
 
 const clean = (value: unknown, limit = 300) => String(value ?? '').trim().slice(0, limit);
 const escapeHtml = (value: string) => value.replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]!);
@@ -13,26 +13,30 @@ export async function POST(request: Request) {
   const company = clean(payload?.customer?.company);
   const email = clean(payload?.customer?.email).toLowerCase();
   const phone = clean(payload?.customer?.phone);
-  const items = Array.isArray(payload?.items) ? payload.items.slice(0, 50).map((item) => ({
-    product: {
-      name: clean(item.product?.name),
-      shortName: clean(item.product?.shortName),
-    },
-    quantity: Number(item.quantity) || 0,
-  })) : [];
+  const requestedItems = Array.isArray(payload?.items) ? payload.items.slice(0, 50) : [];
 
-  if (!name || !company || !email || !phone || payload?.customer?.consent !== 'accepted' || !items.length || !/^\S+@\S+\.\S+$/.test(email)) {
+  if (!name || !company || !email || !phone || payload?.customer?.consent !== 'accepted' || !requestedItems.length || !/^\S+@\S+\.\S+$/.test(email)) {
     return NextResponse.json({ ok: false, error: 'Dados obrigatórios inválidos.' }, { status: 400 });
   }
 
   const cms = await readCms();
+  const items = requestedItems.map((item) => {
+    const product = cms.products.find((entry) => entry.id === clean(item.product?.id) && entry.active !== false);
+    const quantity = Number(item.quantity);
+    if (!product || !Number.isFinite(quantity) || quantity < product.minOrder) return null;
+    return { product: { name: product.name, shortName: product.shortName }, quantity };
+  });
+  if (items.some((item) => item === null)) {
+    return NextResponse.json({ ok: false, error: 'Produtos ou quantidades inválidos.' }, { status: 400 });
+  }
+  const validItems = items.filter((item): item is NonNullable<typeof item> => item !== null);
   const submissionId = crypto.randomUUID();
   const quoteId = `GG-${new Date().getFullYear()}-${submissionId.slice(0, 6).toUpperCase()}`;
-  cms.submissions.unshift({ id: submissionId, form: 'orcamento', data: { nome: name, empresa: company, email, whatsapp: phone, orcamento: quoteId, itens: JSON.stringify(items) }, status: 'new', createdAt: new Date().toISOString() });
+  cms.submissions.unshift({ id: submissionId, form: 'orcamento', data: { nome: name, empresa: company, email, whatsapp: phone, orcamento: quoteId, itens: JSON.stringify(validItems) }, status: 'new', createdAt: new Date().toISOString() });
   cms.audit.unshift(audit('create', `submission:${submissionId}`));
   await writeCms(cms);
 
-  const itemRows = items.map((item) => {
+  const itemRows = validItems.map((item) => {
     const productName = escapeHtml(clean(item.product?.name || item.product?.shortName));
     return `<tr><td style="padding:10px;border-bottom:1px solid #eee">${productName}</td><td style="padding:10px;border-bottom:1px solid #eee;text-align:center">${item.quantity}</td></tr>`;
   }).join('');
@@ -52,7 +56,7 @@ export async function POST(request: Request) {
   });
   if (!emailResponse.ok) return NextResponse.json({ ok: false, error: 'Não foi possível enviar o e-mail.' }, { status: 502 });
 
-  const itemMessage = items.map((item) => `• ${clean(item.product?.shortName || item.product?.name)} — ${Number(item.quantity) || 0} un.`).join('\n');
+  const itemMessage = validItems.map((item) => `• ${clean(item.product.shortName || item.product.name)} — ${item.quantity} un.`).join('\n');
   const message = `Olá! Sou ${name}, da empresa ${company}. Gerei o orçamento ${quoteId} no site e gostaria de continuar o atendimento.\n\n${itemMessage}\n\nE-mail: ${email}`;
   const salesPhone = (process.env.SALES_WHATSAPP || '').replace(/\D/g, '');
   const whatsappUrl = salesPhone ? `https://wa.me/${salesPhone}?text=${encodeURIComponent(message)}` : `https://wa.me/?text=${encodeURIComponent(message)}`;

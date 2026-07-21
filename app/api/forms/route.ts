@@ -2,7 +2,14 @@ import { NextResponse } from 'next/server';
 import { audit, readCms, writeCms } from '@/lib/cms/store';
 import type { FormSubmission } from '@/lib/cms/types';
 
-const allowedForms = new Set(['contato', 'contato-corporativo', 'revendedor', 'download', 'cadastro', 'orcamento']);
+const allowedForms = new Set(['contato', 'contato-corporativo', 'revendedor', 'download', 'cadastro']);
+const requiredFields: Record<string, string[]> = {
+  contato: ['nome', 'email', 'whatsapp', 'mensagem'],
+  'contato-corporativo': ['nome', 'empresa', 'email', 'mensagem'],
+  revendedor: ['nome', 'whatsapp', 'email', 'cnpj', 'cidade', 'estado', 'segmento'],
+  download: ['nome', 'whatsapp', 'email', 'empresa'],
+  cadastro: ['razaoSocial', 'cnpj', 'segmento', 'cidade', 'responsavel', 'cargo', 'email', 'telefone', 'consentimento'],
+};
 
 export async function POST(request: Request) {
   const payload = await request.json().catch(() => null) as { form?: string; data?: Record<string, unknown> } | null;
@@ -11,6 +18,11 @@ export async function POST(request: Request) {
   }
   const values = Object.fromEntries(Object.entries(payload.data).slice(0, 30).map(([key, value]) => [key.slice(0, 80), String(value).slice(0, 2000)]));
   if (!Object.keys(values).length) return NextResponse.json({ error: 'Formulário vazio.' }, { status: 400 });
+  const required = requiredFields[payload.form] ?? [];
+  const email = String(values.email ?? '').trim();
+  if (required.some((field) => !String(values[field] ?? '').trim()) || (required.includes('email') && !/^\S+@\S+\.\S+$/.test(email))) {
+    return NextResponse.json({ error: 'Preencha corretamente todos os campos obrigatórios.' }, { status: 400 });
+  }
   const cms = await readCms();
   const submission: FormSubmission = { id: crypto.randomUUID(), form: payload.form, data: values, status: 'new', createdAt: new Date().toISOString() };
   cms.submissions.unshift(submission);

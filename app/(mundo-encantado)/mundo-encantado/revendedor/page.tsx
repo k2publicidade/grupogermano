@@ -6,6 +6,7 @@ import { CheckIcon } from '@/components/icons';
 export default function RevendedorPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState('');
   
   const [formData, setFormData] = useState({
     nome: '',
@@ -27,16 +28,20 @@ export default function RevendedorPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-
-    const response = await fetch('/api/forms', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ form: 'revendedor', data: formData }) });
-    setLoading(false);
-    if (response.ok) {
+    setError('');
+    try {
+      const response = await fetch('/api/forms', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ form: 'revendedor', data: formData }) });
+      if (!response.ok) throw new Error();
       setSuccess(true);
       const message = `Olá, gostaria de solicitar atendimento comercial para revender Mundo Encantado B2B.\n\n*Dados do Cliente:*\n- Nome: ${formData.nome}\n- WhatsApp: ${formData.whatsapp}\n- E-mail: ${formData.email}\n- CNPJ: ${formData.cnpj}\n- Local: ${formData.cidade} - ${formData.estado}\n- Segmento: ${formData.segmento.toUpperCase()}`;
       
       const whatsappUrl = `https://wa.me/5521964249896?text=${encodeURIComponent(message)}`;
       
       window.open(whatsappUrl, '_blank');
+    } catch {
+      setError('Não foi possível enviar seu cadastro agora. Tente novamente.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -207,6 +212,7 @@ export default function RevendedorPage() {
                     </select>
                   </div>
 
+                  {error && <p className="form-error" role="alert">{error}</p>}
                   <button 
                     className="button button--me-primary button--full" 
                     type="submit" 

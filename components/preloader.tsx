@@ -34,18 +34,15 @@ export function Preloader() {
 
   if (!visible) return null;
 
-  return <div className={`preloader ${exiting ? 'preloader--exit' : ''}`} role="status" aria-live="polite" aria-label="Carregando o site do Grupo Germano">
-    <picture>
-      <source media="(prefers-reduced-motion: reduce)" srcSet="/germano-logo-static.svg" />
-      <img
-        className="preloader__logo"
-        src="/germano-logo-loader.svg"
-        alt=""
-        aria-hidden="true"
-        width="1600"
-        height="900"
-      />
-    </picture>
+  return <div className={`preloader ${exiting ? 'preloader--exit' : ''}`} role="status" aria-live="polite" aria-label="Carregando o site da Mundo Encantado">
+    <img
+      className="preloader__logo"
+      src="/logo_mundo_encantado_dark.svg"
+      alt=""
+      aria-hidden="true"
+      width="520"
+      height="220"
+    />
     <span className="sr-only">Carregando</span>
   </div>;
 }

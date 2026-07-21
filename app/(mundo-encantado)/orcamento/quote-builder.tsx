@@ -59,7 +59,7 @@ export function QuoteBuilder() {
         body: JSON.stringify({
           customer: Object.fromEntries(new FormData(event.currentTarget).entries()),
           items: rows.map(({ product, quantity }) => ({
-            product: { name: product.name, shortName: product.shortName },
+            product: { id: product.id },
             quantity,
           })),
         }),

@@ -2,16 +2,12 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowIcon, CheckIcon, LockIcon } from '@/components/icons';
+import { ArrowIcon, CheckIcon } from '@/components/icons';
 import { readCms } from '@/lib/cms/store';
 export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ slug: string }>;
-}
-
-export async function generateStaticParams() {
-  return (await readCms()).products.filter((p) => p.active !== false).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -61,10 +57,9 @@ export default async function ProductPage({ params }: Props) {
           </div>
           
           <div className="private-price">
-            <LockIcon />
             <div>
-              <strong>Preço exclusivo B2B</strong>
-              <span>Cadastre sua empresa para consultar valores e faixas de desconto por volume.</span>
+              <strong>Atendimento comercial B2B</strong>
+              <span>Cadastre sua empresa para receber disponibilidade e condições comerciais.</span>
             </div>
           </div>
           
@@ -83,7 +78,7 @@ export default async function ProductPage({ params }: Props) {
           
           <div className="detail-actions">
             <Link href={`/cadastro?produto=${p.slug}`} className="button button--me-primary">
-              Liberar Preços <ArrowIcon />
+              Solicitar atendimento <ArrowIcon />
             </Link>
             <Link href={`/orcamento?produto=${p.slug}`} className="button button--outline" style={{ borderColor: 'var(--black)' }}>
               Adicionar ao Orçamento

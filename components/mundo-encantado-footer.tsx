@@ -6,7 +6,7 @@ export function MundoEncantadoFooter() {
       <div className="shell">
         <div className="footer-grid">
           <div>
-            <Link href="/mundo-encantado" className="logo-me logo-me--inverse" style={{ marginBottom: '1rem' }}>
+            <Link href="/catalogo" className="logo-me logo-me--inverse" style={{ marginBottom: '1rem' }}>
               <img src="/logo_mundo_encantado.svg" alt="Mundo Encantado Logo" className="logo-me__image" />
             </Link>
             <p style={{ maxWidth: '280px', fontSize: '0.88rem' }}>
@@ -17,9 +17,9 @@ export function MundoEncantadoFooter() {
           <div>
             <h4 style={{ font: '700 0.72rem Arial, sans-serif', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '1.2rem' }}>Marca</h4>
             <nav style={{ display: 'grid', gap: '0.65rem' }}>
-              <Link href="/mundo-encantado">Início</Link>
+              <Link href="/catalogo">Início</Link>
               <Link href="/mundo-encantado/sobre">Sobre nós</Link>
-              <Link href="/catalogo/mundo-encantado">Catálogo de Produtos</Link>
+              <Link href="/catalogo">Catálogo de Produtos</Link>
               <Link href="/mundo-encantado/download">Baixar Catálogo PDF</Link>
             </nav>
           </div>
@@ -30,7 +30,6 @@ export function MundoEncantadoFooter() {
               <Link href="/mundo-encantado/revendedor">Seja um Revendedor</Link>
               <Link href="/cadastro">Fazer Cadastro</Link>
               <Link href="/orcamento">Montar Orçamento B2B</Link>
-              <Link href="/" style={{ opacity: 0.7 }}>🏢 Grupo Germano (Holding)</Link>
             </nav>
           </div>
 

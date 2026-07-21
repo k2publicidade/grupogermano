@@ -6,6 +6,7 @@ import { DownloadIcon, CheckIcon } from '@/components/icons';
 export default function DownloadPage() {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     nome: '',
     whatsapp: '',
@@ -23,10 +24,10 @@ export default function DownloadPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
-    const response = await fetch('/api/forms', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ form: 'download', data: formData }) });
-    setLoading(false);
-    if (response.ok) {
+    setError('');
+    try {
+      const response = await fetch('/api/forms', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ form: 'download', data: formData }) });
+      if (!response.ok) throw new Error();
       setSuccess(true);
       
       // Trigger browser download of the temporary catalog
@@ -36,6 +37,10 @@ export default function DownloadPage() {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    } catch {
+      setError('Não foi possível liberar o catálogo agora. Tente novamente.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -139,6 +144,7 @@ export default function DownloadPage() {
                 />
               </div>
 
+              {error && <p className="form-error" role="alert">{error}</p>}
               <button className="button button--me-primary button--full" type="submit" disabled={loading} style={{ marginTop: '1rem' }}>
                 {loading ? 'Preparando arquivo...' : 'Liberar Catálogo (PDF)'}
               </button>

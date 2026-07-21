@@ -6,14 +6,22 @@ import { CheckIcon } from '@/components/icons';
 export default function ContatoPage() {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    const data = Object.fromEntries(new FormData(e.currentTarget).entries());
-    const response = await fetch('/api/forms', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ form: 'contato', data }) });
-    setLoading(false);
-    if (response.ok) setSuccess(true);
+    setError('');
+    try {
+      const data = Object.fromEntries(new FormData(e.currentTarget).entries());
+      const response = await fetch('/api/forms', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ form: 'contato', data }) });
+      if (!response.ok) throw new Error();
+      setSuccess(true);
+    } catch {
+      setError('Não foi possível enviar sua mensagem agora. Tente novamente.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -114,6 +122,7 @@ export default function ContatoPage() {
                   <textarea id="mensagem" name="mensagem" required placeholder="Como podemos ajudar sua empresa?" />
                 </div>
 
+                {error && <p className="form-error" role="alert">{error}</p>}
                 <button className="button button--me-primary" type="submit" disabled={loading}>
                   {loading ? 'Enviando...' : 'Enviar Mensagem'}
                 </button>
