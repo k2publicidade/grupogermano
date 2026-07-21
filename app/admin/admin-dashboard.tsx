@@ -9,6 +9,102 @@ import type { Product } from '@/lib/data';
 type Tab = 'overview' | 'content' | 'products' | 'media' | 'forms' | 'audit';
 const nav: { id: Tab; label: string; icon: string }[] = [{ id:'overview',label:'Visão geral',icon:'⌂'},{id:'content',label:'Conteúdo',icon:'✎'},{id:'products',label:'Produtos',icon:'◇'},{id:'media',label:'Imagens',icon:'▧'},{id:'forms',label:'Formulários',icon:'◎'},{id:'audit',label:'Atividade',icon:'↻'}];
 
+function ImageMultiSelect({
+  media,
+  defaultValue,
+  isMulti = false,
+}: {
+  media: MediaItem[];
+  defaultValue: string;
+  isMulti: boolean;
+}) {
+  const initialSelected = defaultValue
+    ? defaultValue.split(',').map((u) => u.trim()).filter(Boolean)
+    : [];
+  const [selected, setSelected] = useState<string[]>(initialSelected);
+
+  const toggle = (url: string) => {
+    if (isMulti) {
+      setSelected((prev) =>
+        prev.includes(url)
+          ? prev.filter((u) => u !== url)
+          : [...prev, url]
+      );
+    } else {
+      setSelected([url]);
+    }
+  };
+
+  return (
+    <div>
+      <input type="hidden" name="value" value={selected.join(', ')} />
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(100px, 1fr))',
+        gap: '10px',
+        maxHeight: '300px',
+        overflowY: 'auto',
+        border: '1px solid var(--cms-line)',
+        borderRadius: '12px',
+        padding: '12px',
+        background: 'white',
+      }}>
+        {media.map((item) => {
+          const isSel = selected.includes(item.url);
+          return (
+            <div
+              key={item.id}
+              onClick={() => toggle(item.url)}
+              style={{
+                position: 'relative',
+                aspectRatio: '1',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                cursor: 'pointer',
+                border: isSel ? '3px solid var(--cms-teal)' : '1px solid var(--cms-line)',
+                boxShadow: isSel ? '0 0 8px rgba(16, 164, 158, 0.25)' : 'none',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              <Image
+                src={item.url}
+                alt={item.alt}
+                fill
+                sizes="100px"
+                style={{ objectFit: 'cover' }}
+              />
+              {isSel && (
+                <div style={{
+                  position: 'absolute',
+                  top: '4px',
+                  right: '4px',
+                  background: 'var(--cms-teal)',
+                  color: 'white',
+                  borderRadius: '50%',
+                  width: '20px',
+                  height: '20px',
+                  display: 'grid',
+                  placeItems: 'center',
+                  fontSize: '0.7rem',
+                  fontWeight: 'bold',
+                  zIndex: 2,
+                }}>
+                  ✓
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <small style={{ color: 'var(--cms-muted)', marginTop: '6px', display: 'block' }}>
+        {isMulti
+          ? 'Selecione uma ou mais imagens na grade acima. O slider exibirá todas na ordem selecionada.'
+          : 'Selecione uma imagem na grade acima.'}
+      </small>
+    </div>
+  );
+}
+
 export function AdminDashboard() {
   const router = useRouter(); const [cms,setCms] = useState<(CmsDocument & { isSupabaseConfigured?: boolean }) | null>(null); const [tab,setTab] = useState<Tab>('overview'); const [query,setQuery] = useState(''); const [editing,setEditing] = useState<ContentEntry | null>(null); const [editingProduct,setEditingProduct] = useState<Product | null>(null); const [creatingProduct,setCreatingProduct] = useState(false); const [editingMedia,setEditingMedia] = useState<MediaItem | null>(null); const [creating,setCreating] = useState(false); const [notice,setNotice] = useState(''); const [busy,setBusy] = useState(false); const [mobileNav,setMobileNav] = useState(false);
   const load = useCallback(async()=>{ const response=await fetch('/api/admin/cms',{cache:'no-store'}); if(response.status===401){router.refresh();return;} setCms(await response.json()); },[router]);
@@ -33,11 +129,10 @@ export function AdminDashboard() {
       {tab==='forms'&&<section className="cms-panel cms-forms"><div className="cms-panel__head"><div><p className="cms-kicker">CAIXA DE ENTRADA</p><h2>Formulários recebidos</h2></div></div>{cms.submissions.length?cms.submissions.map(item=><article key={item.id}><div><span className={`cms-status ${item.status}`}>{item.status==='new'?'Novo':item.status==='contacted'?'Contatado':'Arquivado'}</span><h3>{item.form}</h3><time>{new Date(item.createdAt).toLocaleString('pt-BR')}</time></div><dl>{Object.entries(item.data).map(([key,value])=><div key={key}><dt>{key}</dt><dd>{value}</dd></div>)}</dl><div className="cms-row-actions"><button onClick={()=>mutate('PATCH',{resource:'submission',id:item.id,status:'contacted'})}>Marcar contatado</button><button onClick={()=>mutate('PATCH',{resource:'submission',id:item.id,status:'archived'})}>Arquivar</button><button className="danger" onClick={()=>confirm('Excluir contato?')&&mutate('DELETE',{resource:'submission',id:item.id})}>Excluir</button></div></article>):<div className="cms-empty-state"><span>◎</span><h3>Nenhum contato ainda</h3><p>As mensagens enviadas pelo site aparecerão aqui.</p></div>}</section>}
       {tab==='audit'&&<section className="cms-panel cms-audit"><div className="cms-panel__head"><div><p className="cms-kicker">SEGURANÇA E HISTÓRICO</p><h2>Atividade do CMS</h2></div></div>{cms.audit.map(item=><article key={item.id}><i>✓</i><div><strong>{item.action}</strong><span>{item.resource}</span></div><time>{new Date(item.createdAt).toLocaleString('pt-BR')}</time></article>)}</section>}
     </main>
-    {(editing||creating)&&<div className="cms-modal-backdrop" onMouseDown={()=>{setEditing(null);setCreating(false)}}><div className="cms-modal" onMouseDown={e=>e.stopPropagation()}><button className="cms-modal__close" onClick={()=>{setEditing(null);setCreating(false)}}>×</button><p className="cms-kicker">{editing?'EDITAR CONTEÚDO':'NOVO CONTEÚDO'}</p><h2>{editing?.label??'Criar campo'}</h2><form onSubmit={saveContent}><div className="cms-form-row"><label>Seção<input name="group" defaultValue={editing?.group} required/></label><label>Nome do campo<input name="label" defaultValue={editing?.label} required/></label></div>{!editing&&<label>Chave única<input name="key" placeholder="secao.campo" pattern="[a-z0-9.-]+" required/></label>}<div className="cms-form-row"><label>Tipo<select name="type" defaultValue={editing?.type??'text'}>{(['text','textarea','image','url'] as ContentType[]).map(type=><option key={type}>{type}</option>)}</select></label><label>Status<select name="status" defaultValue={editing?.status??'draft'}><option value="published">Publicado</option><option value="draft">Rascunho</option></select></label></div><label>Conteúdo{editing?.type==='image' && editing.key !== 'scale.image'?<select name="value" defaultValue={editing.value}>{cms.media.map(image=><option value={image.url} key={image.id}>{image.name}</option>)}</select>:(
-  <>
-    <textarea name="value" defaultValue={editing?.value} rows={6} required/>
-    {editing?.key === 'scale.image' && <small style={{ color: 'var(--cms-muted)', marginTop: '4px', display: 'block' }}>Para o slider funcionar, você pode adicionar múltiplos URLs de imagem separados por vírgula.</small>}
-  </>
+    {(editing||creating)&&<div className="cms-modal-backdrop" onMouseDown={()=>{setEditing(null);setCreating(false)}}><div className="cms-modal" onMouseDown={e=>e.stopPropagation()}><button className="cms-modal__close" onClick={()=>{setEditing(null);setCreating(false)}}>×</button><p className="cms-kicker">{editing?'EDITAR CONTEÚDO':'NOVO CONTEÚDO'}</p><h2>{editing?.label??'Criar campo'}</h2><form onSubmit={saveContent}><div className="cms-form-row"><label>Seção<input name="group" defaultValue={editing?.group} required/></label><label>Nome do campo<input name="label" defaultValue={editing?.label} required/></label></div>{!editing&&<label>Chave única<input name="key" placeholder="secao.campo" pattern="[a-z0-9.-]+" required/></label>}<div className="cms-form-row"><label>Tipo<select name="type" defaultValue={editing?.type??'text'}>{(['text','textarea','image','url'] as ContentType[]).map(type=><option key={type}>{type}</option>)}</select></label><label>Status<select name="status" defaultValue={editing?.status??'draft'}><option value="published">Publicado</option><option value="draft">Rascunho</option></select></label></div><label>Conteúdo{editing?.type==='image' ? (
+  <ImageMultiSelect media={cms.media} defaultValue={editing.value ?? ''} isMulti={editing.key === 'scale.image'} />
+) : (
+  <textarea name="value" defaultValue={editing?.value} rows={6} required/>
 )}</label><div className="cms-modal__actions"><button type="button" onClick={()=>{setEditing(null);setCreating(false)}}>Cancelar</button><button className="cms-primary" disabled={busy}>{busy?'Salvando…':'Salvar alterações'}</button></div></form></div></div>}
     {(editingProduct||creatingProduct)&&<div className="cms-modal-backdrop" onMouseDown={()=>{setEditingProduct(null);setCreatingProduct(false)}}><div className="cms-modal cms-product-modal" onMouseDown={e=>e.stopPropagation()}><button className="cms-modal__close" onClick={()=>{setEditingProduct(null);setCreatingProduct(false)}}>×</button><p className="cms-kicker">{editingProduct?'EDITAR PRODUTO':'NOVO PRODUTO'}</p><h2>{editingProduct?.name??'Adicionar ao catálogo'}</h2><form onSubmit={saveProduct}><div className="cms-form-row"><label>Nome completo<input name="name" defaultValue={editingProduct?.name} required/></label><label>Nome curto<input name="shortName" defaultValue={editingProduct?.shortName} required/></label></div><div className="cms-form-row"><label>Endereço (slug)<input name="slug" defaultValue={editingProduct?.slug} pattern="[a-z0-9-]+" required/></label><label>SKU<input name="sku" defaultValue={editingProduct?.sku} required/></label></div><label>Categoria<input name="category" defaultValue={editingProduct?.category} required/></label><label>Descrição<textarea name="description" defaultValue={editingProduct?.description} rows={4} required/></label><label>Imagem<select name="image" defaultValue={editingProduct?.image} required><option value="">Selecione uma imagem</option>{cms.media.map(image=><option value={image.url} key={image.id}>{image.name}</option>)}</select></label><div className="cms-form-row cms-form-row--three"><label>Pedido mínimo<input name="minOrder" type="number" min="1" defaultValue={editingProduct?.minOrder??1} required/></label><label>Unidade<input name="unit" defaultValue={editingProduct?.unit??'unidades'} required/></label><label>Estoque<input name="stock" type="number" min="0" defaultValue={editingProduct?.stock??0} required/></label></div><label>Etiquetas <small>(separadas por vírgula)</small><input name="tags" defaultValue={editingProduct?.tags.join(', ')} /></label><div className="cms-form-row"><label>Especificações <small>(uma por linha: Nome | Valor)</small><textarea name="specifications" rows={5} defaultValue={editingProduct?.specifications.map(item=>`${item.label} | ${item.value}`).join('\n')} required/></label><label>Preços por volume <small>(uma por linha: Quantidade | Preço)</small><textarea name="tiers" rows={5} defaultValue={editingProduct?.tiers.map(item=>`${item.min} | ${item.price.toFixed(2).replace('.',',')}`).join('\n')} required/></label></div><label className="cms-check"><input name="featured" type="checkbox" defaultChecked={editingProduct?.featured}/><span>Exibir como produto em destaque</span></label><div className="cms-modal__actions"><button type="button" onClick={()=>{setEditingProduct(null);setCreatingProduct(false)}}>Cancelar</button><button className="cms-primary" disabled={busy}>{busy?'Salvando…':'Salvar produto'}</button></div></form></div></div>}
     {editingMedia&&<div className="cms-modal-backdrop" onMouseDown={()=>setEditingMedia(null)}><div className="cms-modal cms-media-modal" onMouseDown={e=>e.stopPropagation()}><button className="cms-modal__close" onClick={()=>setEditingMedia(null)}>×</button><p className="cms-kicker">EDITAR IMAGEM</p><h2>Dados da mídia</h2><div className="cms-media-preview"><Image src={editingMedia.url} alt={editingMedia.alt} fill sizes="420px"/></div><form onSubmit={saveMedia}><label>Nome<input name="name" defaultValue={editingMedia.name} required/></label><label>Descrição acessível<textarea name="alt" defaultValue={editingMedia.alt} rows={3} required/></label><div className="cms-modal__actions"><button type="button" onClick={()=>setEditingMedia(null)}>Cancelar</button><button className="cms-primary" disabled={busy}>{busy?'Salvando…':'Salvar imagem'}</button></div></form></div></div>}
