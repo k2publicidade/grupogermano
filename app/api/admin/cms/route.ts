@@ -12,7 +12,9 @@ const forbidden = () => NextResponse.json({ error: 'Não autorizado.' }, { statu
 
 export async function GET() {
   if (!await authorized()) return forbidden();
-  return NextResponse.json(await readCms(), { headers: { 'Cache-Control': 'no-store' } });
+  const cms = await readCms();
+  const isSupabaseConfigured = !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
+  return NextResponse.json({ ...cms, isSupabaseConfigured }, { headers: { 'Cache-Control': 'no-store' } });
 }
 
 export async function POST(request: Request) {
