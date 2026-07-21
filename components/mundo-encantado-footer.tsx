@@ -20,7 +20,7 @@ export function MundoEncantadoFooter() {
               <Link href="/catalogo">Início</Link>
               <Link href="/mundo-encantado/sobre">Sobre nós</Link>
               <Link href="/catalogo">Catálogo de Produtos</Link>
-              <Link href="/mundo-encantado/download">Baixar Catálogo PDF</Link>
+              {/* <Link href="/mundo-encantado/download">Baixar Catálogo PDF</Link> */}
             </nav>
           </div>
 

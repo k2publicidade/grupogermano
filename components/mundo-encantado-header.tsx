@@ -41,9 +41,9 @@ export function MundoEncantadoHeader() {
         </nav>
 
         <div className="header-actions">
-          <Link href="/mundo-encantado/download" className="button button--me-primary button--compact">
+          {/* <Link href="/mundo-encantado/download" className="button button--me-primary button--compact">
             <DownloadIcon /> Catálogo PDF
-          </Link>
+          </Link> */}
           <button 
             className="menu-button" 
             onClick={() => setOpen(!open)} 
@@ -68,9 +68,9 @@ export function MundoEncantadoHeader() {
               {link.label}
             </Link>
           ))}
-          <Link href="/mundo-encantado/download" className="button button--me-primary" onClick={() => setOpen(false)}>
+          {/* <Link href="/mundo-encantado/download" className="button button--me-primary" onClick={() => setOpen(false)}>
             Baixar Catálogo PDF
-          </Link>
+          </Link> */}
         </nav>
       )}
     </header>

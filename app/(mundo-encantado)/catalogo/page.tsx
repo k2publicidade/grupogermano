@@ -42,7 +42,7 @@ export default async function CatalogPage() {
             <strong>{products.length} produtos</strong>
             <span> disponíveis para proposta comercial</span>
           </div>
-          <Link href="/mundo-encantado/download" className="button button--me-outline">Baixar catálogo em PDF</Link>
+          {/* <Link href="/mundo-encantado/download" className="button button--me-outline">Baixar catálogo em PDF</Link> */}
         </div>
         <div className="product-grid">
           {products.map((product) => <ProductCard product={product} key={product.id} />)}

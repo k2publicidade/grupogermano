@@ -175,7 +175,7 @@ export function MagicalHome() {
             <p className="magic-lead">{value('hero.description', 'Estampas autorais, acabamento premium e um mix pronto para encantar seus clientes — da prateleira até o laço final.')}</p>
             <div className="magic-actions">
               <Link href="#catalogo-produtos" className="magic-button">Explorar produtos <span>↓</span></Link>
-              <Link href="/mundo-encantado/download" className="magic-link">Baixar catálogo PDF <span>↗</span></Link>
+              {/* <Link href="/mundo-encantado/download" className="magic-link">Baixar catálogo PDF <span>↗</span></Link> */}
             </div>
             <div className="magic-proof"><b>Do nosso mundo<br />para todo o Brasil</b><span>Estampas exclusivas</span><span>Reposição facilitada</span></div>
           </div>
