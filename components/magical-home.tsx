@@ -6,6 +6,141 @@ import { useEffect, useRef, useState } from 'react';
 
 const Stars = () => <span className="magic-stars" aria-hidden="true">✦　·　✧</span>;
 
+function ScaleSlider({ value }: { value: string }) {
+  const images = value.split(',').map((img) => img.trim()).filter(Boolean);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (images.length <= 1) return;
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  if (images.length === 0) return null;
+
+  return (
+    <div className="magic-slider" style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+      {images.map((src, i) => (
+        <div
+          key={src}
+          className="magic-slider-slide"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            opacity: i === index ? 1 : 0,
+            transition: 'opacity 0.8s ease-in-out',
+            zIndex: i === index ? 1 : 0,
+          }}
+        >
+          <Image
+            src={src}
+            alt={`Estrutura da empresa - Imagem ${i + 1}`}
+            fill
+            sizes="(max-width: 800px) 92vw, 48vw"
+            style={{ objectFit: 'cover' }}
+            priority={i === 0}
+          />
+        </div>
+      ))}
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setIndex((prev) => (prev - 1 + images.length) % images.length);
+            }}
+            className="magic-slider-btn magic-slider-btn--prev"
+            aria-label="Imagem anterior"
+            style={{
+              position: 'absolute',
+              left: '15px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              zIndex: 10,
+              background: 'rgba(255, 255, 255, 0.75)',
+              border: 'none',
+              borderRadius: '50%',
+              width: '40px',
+              height: '40px',
+              cursor: 'pointer',
+              display: 'grid',
+              placeItems: 'center',
+              fontWeight: 'bold',
+              color: 'var(--purple-deep)',
+              boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
+            }}
+          >
+            ‹
+          </button>
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              setIndex((prev) => (prev + 1) % images.length);
+            }}
+            className="magic-slider-btn magic-slider-btn--next"
+            aria-label="Próxima imagem"
+            style={{
+              position: 'absolute',
+              right: '15px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              zIndex: 10,
+              background: 'rgba(255, 255, 255, 0.75)',
+              border: 'none',
+              borderRadius: '50%',
+              width: '40px',
+              height: '40px',
+              cursor: 'pointer',
+              display: 'grid',
+              placeItems: 'center',
+              fontWeight: 'bold',
+              color: 'var(--purple-deep)',
+              boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
+            }}
+          >
+            ›
+          </button>
+          <div
+            className="magic-slider-dots"
+            style={{
+              position: 'absolute',
+              bottom: '15px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 10,
+              display: 'flex',
+              gap: '8px',
+            }}
+          >
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIndex(i);
+                }}
+                className={`magic-slider-dot ${i === index ? 'active' : ''}`}
+                aria-label={`Ir para imagem ${i + 1}`}
+                style={{
+                  width: i === index ? '24px' : '8px',
+                  height: '8px',
+                  borderRadius: '4px',
+                  border: 'none',
+                  background: i === index ? 'var(--yellow)' : 'rgba(255,255,255,0.6)',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                }}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 export function MagicalHome() {
   const root = useRef<HTMLDivElement>(null);
   const [content, setContent] = useState<Record<string, string>>({});
@@ -93,7 +228,7 @@ export function MagicalHome() {
 
       <section className="magic-scale">
         <div className="magic-shell magic-scale__grid">
-          <div className="magic-scale__image"><div className="magic-photo magic-photo--product"><Image src={value('scale.image', '/images/produtos-reais/linha-completa-mundo-encantado.png')} alt="Linha completa real de produtos Mundo Encantado" fill sizes="(max-width: 800px) 92vw, 48vw" /></div><span className="magic-floating-tag">feito aqui<br />com carinho ✦</span></div>
+          <div className="magic-scale__image"><div className="magic-photo magic-photo--product"><ScaleSlider value={value('scale.image', '/images/produtos-reais/linha-completa-mundo-encantado.png')} /></div><span className="magic-floating-tag">feito aqui<br />com carinho ✦</span></div>
           <div><p className="magic-eyebrow">Estrutura que dá tranquilidade</p><h2>{value('scale.title', 'Da ideia à prateleira, cuidamos de tudo.')}</h2><p>{value('scale.description', 'Criação autoral, produção gráfica, controle de qualidade e expedição reunidos para atender sua loja de ponta a ponta.')}</p><div className="magic-stats"><div><strong>Brasil</strong><span>atendimento nacional</span></div><div><strong>3 linhas</strong><span>em um mix completo</span></div><div><strong>Direto</strong><span>com nosso comercial</span></div></div></div>
         </div>
       </section>
