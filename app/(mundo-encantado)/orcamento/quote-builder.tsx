@@ -17,7 +17,13 @@ export function QuoteBuilder() {
 
   useEffect(() => {
     fetch('/api/cms', { cache: 'no-store' }).then((response) => response.json()).then((data) => {
-      if (data.products?.length) setProducts(data.products);
+      if (data.products?.length) {
+        const loadedProducts = data.products as Product[];
+        setProducts(loadedProducts);
+        setCart(Object.fromEntries(
+          loadedProducts.slice(0, 2).map((product) => [product.id, product.minOrder]),
+        ));
+      }
     }).catch(() => null);
   }, []);
 
