@@ -8,10 +8,10 @@ const requiredFields: Record<string, string[]> = {
   'contato-corporativo': ['nome', 'empresa', 'email', 'mensagem'],
   revendedor: ['nome', 'whatsapp', 'email', 'cnpj', 'cidade', 'estado', 'segmento'],
   download: ['nome', 'whatsapp', 'email', 'empresa'],
-  cadastro: ['nivelCadastro', 'razaoSocial', 'cnpj', 'responsavel', 'email', 'telefone', 'consentimento'],
+  cadastro: ['nivelCadastro', 'responsavel', 'email', 'telefone', 'consentimento'],
 };
 
-const completeRegistrationFields = ['nomeFantasia', 'inscricaoEstadual', 'segmento', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'cargo'];
+const completeRegistrationFields = ['razaoSocial', 'cnpj', 'nomeFantasia', 'inscricaoEstadual', 'segmento', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'cargo'];
 
 export async function POST(request: Request) {
   const payload = await request.json().catch(() => null) as { form?: string; data?: Record<string, unknown> } | null;
