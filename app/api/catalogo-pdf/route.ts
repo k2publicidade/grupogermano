@@ -8,8 +8,8 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
   const cookieStore = await cookies();
-  if (cookieStore.get('catalogo_liberado')?.value !== 'sim') {
-    return NextResponse.redirect(new URL('/mundo-encantado/download', request.url));
+  if (cookieStore.get('cadastro_b2b_completo')?.value !== 'sim') {
+    return NextResponse.redirect(new URL('/cadastro?nivel=completo', request.url));
   }
 
   try {
