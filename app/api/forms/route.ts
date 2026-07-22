@@ -8,8 +8,10 @@ const requiredFields: Record<string, string[]> = {
   'contato-corporativo': ['nome', 'empresa', 'email', 'mensagem'],
   revendedor: ['nome', 'whatsapp', 'email', 'cnpj', 'cidade', 'estado', 'segmento'],
   download: ['nome', 'whatsapp', 'email', 'empresa'],
-  cadastro: ['razaoSocial', 'cnpj', 'segmento', 'cidade', 'responsavel', 'cargo', 'email', 'telefone', 'consentimento'],
+  cadastro: ['nivelCadastro', 'razaoSocial', 'cnpj', 'responsavel', 'email', 'telefone', 'consentimento'],
 };
+
+const completeRegistrationFields = ['nomeFantasia', 'inscricaoEstadual', 'segmento', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'cargo'];
 
 export async function POST(request: Request) {
   const payload = await request.json().catch(() => null) as { form?: string; data?: Record<string, unknown> } | null;
@@ -18,7 +20,11 @@ export async function POST(request: Request) {
   }
   const values = Object.fromEntries(Object.entries(payload.data).slice(0, 30).map(([key, value]) => [key.slice(0, 80), String(value).slice(0, 2000)]));
   if (!Object.keys(values).length) return NextResponse.json({ error: 'Formulário vazio.' }, { status: 400 });
-  const required = requiredFields[payload.form] ?? [];
+  const required = [...(requiredFields[payload.form] ?? [])];
+  if (payload.form === 'cadastro' && !['basico', 'completo'].includes(values.nivelCadastro)) {
+    return NextResponse.json({ error: 'Nível de cadastro inválido.' }, { status: 400 });
+  }
+  if (payload.form === 'cadastro' && values.nivelCadastro === 'completo') required.push(...completeRegistrationFields);
   const email = String(values.email ?? '').trim();
   if (required.some((field) => !String(values[field] ?? '').trim()) || (required.includes('email') && !/^\S+@\S+\.\S+$/.test(email))) {
     return NextResponse.json({ error: 'Preencha corretamente todos os campos obrigatórios.' }, { status: 400 });
@@ -29,8 +35,8 @@ export async function POST(request: Request) {
   cms.audit.unshift(audit('create', `submission:${submission.id}`));
   await writeCms(cms);
   const response = NextResponse.json({ ok: true, id: submission.id }, { status: 201 });
-  if (payload.form === 'download') {
-    response.cookies.set('catalogo_liberado', 'sim', {
+  if (payload.form === 'cadastro' && values.nivelCadastro === 'completo') {
+    response.cookies.set('cadastro_b2b_completo', 'sim', {
       httpOnly: true,
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
