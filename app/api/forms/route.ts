@@ -24,6 +24,9 @@ export async function POST(request: Request) {
   if (payload.form === 'cadastro' && !['basico', 'completo'].includes(values.nivelCadastro)) {
     return NextResponse.json({ error: 'Nível de cadastro inválido.' }, { status: 400 });
   }
+  if (payload.form === 'cadastro' && values.consentimento !== 'aceito') {
+    return NextResponse.json({ error: 'Confirme o consentimento para concluir o cadastro.' }, { status: 400 });
+  }
   if (payload.form === 'cadastro' && values.nivelCadastro === 'completo') required.push(...completeRegistrationFields);
   const email = String(values.email ?? '').trim();
   if (required.some((field) => !String(values[field] ?? '').trim()) || (required.includes('email') && !/^\S+@\S+\.\S+$/.test(email))) {
