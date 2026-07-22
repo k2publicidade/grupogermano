@@ -11,7 +11,7 @@ const requiredFields: Record<string, string[]> = {
   cadastro: ['nivelCadastro', 'responsavel', 'email', 'telefone', 'consentimento'],
 };
 
-const completeRegistrationFields = ['razaoSocial', 'cnpj', 'nomeFantasia', 'inscricaoEstadual', 'segmento', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'cargo'];
+const completeRegistrationFields = ['razaoSocial', 'nomeFantasia', 'segmento', 'cep', 'endereco', 'numero', 'bairro', 'cidade', 'estado', 'cargo'];
 
 export async function POST(request: Request) {
   const payload = await request.json().catch(() => null) as { form?: string; data?: Record<string, unknown> } | null;
