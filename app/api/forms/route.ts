@@ -21,8 +21,8 @@ export async function POST(request: Request) {
   const values = Object.fromEntries(Object.entries(payload.data).slice(0, 30).map(([key, value]) => [key.slice(0, 80), String(value).slice(0, 2000)]));
   if (!Object.keys(values).length) return NextResponse.json({ error: 'Formulário vazio.' }, { status: 400 });
   const required = [...(requiredFields[payload.form] ?? [])];
-  if (payload.form === 'cadastro' && !['basico', 'completo'].includes(values.nivelCadastro)) {
-    return NextResponse.json({ error: 'Nível de cadastro inválido.' }, { status: 400 });
+  if (payload.form === 'cadastro' && values.nivelCadastro !== 'completo') {
+    return NextResponse.json({ error: 'Apenas o cadastro completo está disponível.' }, { status: 400 });
   }
   if (payload.form === 'cadastro' && values.consentimento !== 'aceito') {
     return NextResponse.json({ error: 'Confirme o consentimento para concluir o cadastro.' }, { status: 400 });
